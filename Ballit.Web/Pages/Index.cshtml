@@ -1,0 +1,49 @@
+﻿@page
+@using Ballit.Web.Models
+@model Ballit.Web.Models.IndexModel
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@{
+    ViewData["Title"] = "ballit";
+}
+
+<div class="row">
+    <h4>Ballit</h4>
+
+    <div class="posts">
+    @foreach (var post in Model.Posts)
+    {
+        <div class="media">
+            <div class="media-left">
+                <div class="up text-center">
+                    <a href><span class="glyphicon glyphicon-chevron-up"></span></a>
+                </div>
+                <div class="score text-center">
+                    @post.Score
+                </div>
+                <div class="down text-center">
+                    <a href><span class="glyphicon glyphicon-chevron-down"></span></a>
+                </div>
+            </div>
+            <div class="media-left">
+                <a href="#">
+                    <img class="media-object" src="@post.ThumbUrl">
+                </a>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">
+                    <a href="/post/@post.Id">@post.Title</a>
+                </h4>
+                <h4 class="media-body">
+
+                </h4>
+            </div>
+        </div>
+   }
+
+    @if(!Model.Posts?.Any() ?? false)
+    {
+        <h5 class="text-danger"> No posts found</h5>
+
+    }
+</div>
+</div>

@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  ballit.web.api:
+    image: ballit.web.api
+    build:
+      context: ./Ballit.Web.Api
+      dockerfile: Dockerfile
