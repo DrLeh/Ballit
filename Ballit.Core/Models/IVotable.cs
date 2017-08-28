@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Ballit.Core.Models
 {
-    public interface IVotable
+    public interface IVote
     {
-        ICollection<Vote> Votes { get; set; }
-        //todo: use c# 8 to add a default implementation of intvalue method to sum votes
+        VoteType Value { get; set; }
     }
 }

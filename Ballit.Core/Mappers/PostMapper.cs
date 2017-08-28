@@ -25,8 +25,8 @@ namespace Ballit.Core.Mappers
             view.ThumbUrl = model.ThumbUrl;
             view.Url = model.Url;
             view.UrlTitle = model.UrlTitle;
-            view.Score = model.PostScore();
-            view.Order = model.OrderScore();
+            //view.Score = model.PostScore();
+            //view.Order = model.OrderScore();
             view.NumberOfComments = model.Comments?.Count() ?? 0;
             return view;
         }

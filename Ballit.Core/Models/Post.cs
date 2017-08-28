@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ballit.Core.Models
 {
-    public class Post : Votable, ICommentable
+    public class Post : Entity<long>, ICommentable
     {
         public string Title { get; set; }
         public string UrlTitle { get; set; }
@@ -18,10 +18,11 @@ namespace Ballit.Core.Models
 
         public string Domain { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
-
         [ForeignKey(nameof(Subballit))]
         public string Sub { get; set; }
         public Subballit Subballit { get; set; }
+
+        public ICollection<PostVote> Votes { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

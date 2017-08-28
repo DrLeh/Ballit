@@ -10,20 +10,20 @@ namespace Ballit.Core.Test.Extensions
 {
     public class VotableExtensionsTest
     {
-        private class TestVotable : IVotable
+        private class TestVotable
         {
-            public ICollection<Vote> Votes { get; set; } = new List<Vote>();
+            public ICollection<IVote> Votes { get; set; } = new List<IVote>();
         }
+
+        IVote CreateVote(long userId, VoteType type) => new PostVote
+        {
+            UserId = userId,
+            Value = type
+        };
 
         [Fact]
         public void Score_0_Test()
         {
-            Vote CreateVote(long userId, VoteType type) => new Vote
-            {
-                UserId = userId,
-                Value = type
-            };
-
             var votable = new TestVotable
             {
                 Votes =
@@ -34,20 +34,14 @@ namespace Ballit.Core.Test.Extensions
                 }
             };
 
-            var result = votable.PostScore();
+            //var result = votable.PostScore();
 
-            result.Should().Be(0);
+            //result.Should().Be(0);
         }
 
         [Fact]
         public void Score_Positive_Test()
         {
-            Vote CreateVote(long userId, VoteType type) => new Vote
-            {
-                UserId = userId,
-                Value = type
-            };
-
             var votable = new TestVotable
             {
                 Votes =
@@ -58,20 +52,14 @@ namespace Ballit.Core.Test.Extensions
                 }
             };
 
-            var result = votable.PostScore();
+            //var result = votable.PostScore();
 
-            result.Should().Be(3);
+            //result.Should().Be(3);
         }
 
         [Fact]
         public void Score_Negative_Test()
         {
-            Vote CreateVote(long userId, VoteType type) => new Vote
-            {
-                UserId = userId,
-                Value = type
-            };
-
             var votable = new TestVotable
             {
                 Votes =
@@ -82,9 +70,9 @@ namespace Ballit.Core.Test.Extensions
                 }
             };
 
-            var result = votable.PostScore();
+            //var result = votable.PostScore();
 
-            result.Should().Be(-3);
+            //result.Should().Be(-3);
         }
     }
 }

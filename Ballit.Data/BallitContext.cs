@@ -10,8 +10,10 @@ namespace Ballit.Data
     public class BallitContext : DbContext
     {
         public DbSet<Post> Posts { get; set; }
+        public DbSet<PostVote> PostVotes { get; set; }
+
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Vote> Votes { get; set; }
+        public DbSet<CommentVote> CommentVotes { get; set; }
         //public DbSet<Votable> Votables { get; set; }
 
         public DbSet<Subballit> Subballits { get; set; }
@@ -57,8 +59,8 @@ namespace Ballit.Data
             //    .HasForeignKey(x => x.VotableId)
             //    .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Votable>()
-                .ToTable(nameof(Votable));
+            //modelBuilder.Entity<Votable>()
+            //    .ToTable(nameof(Votable));
 
             modelBuilder.Entity<Post>()
                 .ToTable(nameof(Post));

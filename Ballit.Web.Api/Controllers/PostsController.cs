@@ -39,7 +39,7 @@ namespace Ballit.Web.Api.Controllers
         public void Vote(long id, VoteType type)
         {
             var currentUserId = 1;//todo
-            PostService.Vote(new Vote(id, type, currentUserId));
+            PostService.Vote(new PostVote(id, type, currentUserId));
             //make request to signalr
         }
 

@@ -42,119 +42,155 @@ namespace Ballit.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Votable",
+                name: "Post",
                 columns: table => new
                 {
-                    CommentId = table.Column<long>(type: "bigint", nullable: true),
-                    PostId = table.Column<long>(type: "bigint", nullable: true),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Domain = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sub = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Post_Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ThumbUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UrlTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UrlTitle = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Post", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Post_Subballits_Sub",
+                        column: x => x.Sub,
+                        principalTable: "Subballits",
+                        principalColumn: "Name",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CommentId = table.Column<long>(type: "bigint", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedByUserId = table.Column<long>(type: "bigint", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostId = table.Column<long>(type: "bigint", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedByUserId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Votable", x => x.Id);
+                    table.PrimaryKey("PK_Comment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Votable_Votable_CommentId",
+                        name: "FK_Comment_Comment_CommentId",
                         column: x => x.CommentId,
-                        principalTable: "Votable",
+                        principalTable: "Comment",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Votable_Votable_PostId",
+                        name: "FK_Comment_Post_PostId",
                         column: x => x.PostId,
-                        principalTable: "Votable",
+                        principalTable: "Post",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostVotes",
+                columns: table => new
+                {
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    PostId = table.Column<long>(type: "bigint", nullable: false),
+                    Value = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostVotes", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Votable_Subballits_Sub",
-                        column: x => x.Sub,
-                        principalTable: "Subballits",
-                        principalColumn: "Name",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_PostVotes_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Votable_Users_CreatedByUserId",
-                        column: x => x.CreatedByUserId,
+                        name: "FK_PostVotes_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Votes",
+                name: "CommentVotes",
                 columns: table => new
                 {
                     UserId = table.Column<long>(type: "bigint", nullable: false),
-                    Value = table.Column<int>(type: "int", nullable: false),
-                    VotableId = table.Column<long>(type: "bigint", nullable: false)
+                    CommentIdId = table.Column<long>(type: "bigint", nullable: false),
+                    Value = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Votes", x => x.UserId);
+                    table.PrimaryKey("PK_CommentVotes", x => x.UserId);
                     table.ForeignKey(
-                        name: "FK_Votes_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
+                        name: "FK_CommentVotes_Comment_CommentIdId",
+                        column: x => x.CommentIdId,
+                        principalTable: "Comment",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Votes_Votable_VotableId",
-                        column: x => x.VotableId,
-                        principalTable: "Votable",
+                        name: "FK_CommentVotes_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subballits_UserId",
-                table: "Subballits",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Votable_CommentId",
-                table: "Votable",
+                name: "IX_Comment_CommentId",
+                table: "Comment",
                 column: "CommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votable_PostId",
-                table: "Votable",
+                name: "IX_Comment_PostId",
+                table: "Comment",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votable_Sub",
-                table: "Votable",
+                name: "IX_CommentVotes_CommentIdId",
+                table: "CommentVotes",
+                column: "CommentIdId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Post_Sub",
+                table: "Post",
                 column: "Sub");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votable_CreatedByUserId",
-                table: "Votable",
-                column: "CreatedByUserId");
+                name: "IX_PostVotes_PostId",
+                table: "PostVotes",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votes_VotableId",
-                table: "Votes",
-                column: "VotableId");
+                name: "IX_Subballits_UserId",
+                table: "Subballits",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Votes");
+                name: "CommentVotes");
 
             migrationBuilder.DropTable(
-                name: "Votable");
+                name: "PostVotes");
+
+            migrationBuilder.DropTable(
+                name: "Comment");
+
+            migrationBuilder.DropTable(
+                name: "Post");
 
             migrationBuilder.DropTable(
                 name: "Subballits");
