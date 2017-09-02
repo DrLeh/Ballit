@@ -7,31 +7,30 @@ using Ballit.Core.Models;
 
 namespace Ballit.Data
 {
-    public class DataAccess : IDataAccess, IDisposable
+    public class DataAccess : IDataAccess
     {
-        private BallitContext Context { get; }
+        public IRepository Repository { get; }
 
-        public DataAccess(BallitContext context)
+        public DataAccess(IRepository repository)
         {
-            //Context = new BallitContext();
-            Context = context;
+            Repository = repository;
+        }
+
+        public IDataTransaction CreateTransaction()
+        {
+            return new DataTransaction(Repository);
         }
 
         public IQueryable<T> Query<T>()
             where T : class
         {
-            return Context.Set<T>().AsQueryable();
+            return Repository.Query<T>();
         }
 
         public T Query<T>(long id)
             where T : Entity<long>
         {
-            return Context.Set<T>().Single(x => x.Id == id);
-        }
-
-        public void Dispose()
-        {
-            Context.Dispose();
+            return Repository.Query<T>().Single(x => x.Id == id);
         }
     }
 }

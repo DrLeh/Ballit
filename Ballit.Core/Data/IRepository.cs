@@ -6,10 +6,14 @@ using Ballit.Core.Models;
 
 namespace Ballit.Core.Data
 {
-    public interface IDataAccess
+    public interface IRepository
     {
         IQueryable<T> Query<T>() where T : class;
         T Query<T>(long id) where T : Entity<long>;
-        IDataTransaction CreateTransaction();
+
+        //for internal use only
+        T AddOrUpdate<T>(T entity) where T : Entity<long>;
+        void Remove<T>(T entity) where T : Entity<long>;
+        void Commit();
     }
 }

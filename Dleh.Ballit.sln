@@ -11,9 +11,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{760218E5-C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ballit.Core.Test", "Ballit.Core.Test\Ballit.Core.Test.csproj", "{5145FA68-61F8-49D4-AE40-8F8430BED21A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ballit.Web", "Ballit.Web\Ballit.Web.csproj", "{BF0DF9E7-D584-45F7-BD96-28905264D7A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ballit.Web", "Ballit.Web\Ballit.Web.csproj", "{BF0DF9E7-D584-45F7-BD96-28905264D7A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ballit.Data", "Ballit.Data\Ballit.Data.csproj", "{A9D782D6-E7C9-43C9-B02C-9E7DF83B375B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ballit.Data", "Ballit.Data\Ballit.Data.csproj", "{A9D782D6-E7C9-43C9-B02C-9E7DF83B375B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

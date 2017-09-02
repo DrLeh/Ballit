@@ -32,5 +32,13 @@ namespace Ballit.Data.Repositories
                 .Join(DataAccess.Query<User>().SelectMany(x => x.Subscriptions.Select(y => y.Name))
                     , x => x.Sub, x => x, (post, sub) => post);
         }
+
+        public Post Submit(Post p)
+        {
+            var trans = DataAccess.CreateTransaction();
+            trans.AddOrUpdate(p);
+            trans.Commit();
+            return p;
+        }
     }
 }

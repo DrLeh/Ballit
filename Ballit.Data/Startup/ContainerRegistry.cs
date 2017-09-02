@@ -13,6 +13,7 @@ namespace Ballit.Data.Startup
     {
         public override void Inject(IServiceCollection services)
         {
+            OverrideRegistration<IRepository, Repository>(services);
             OverrideRegistration<IDataAccess, DataAccess>(services);
             OverrideRegistration<IPostRepository, PostRepository>(services);
         }

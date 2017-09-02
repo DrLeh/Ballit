@@ -12,6 +12,7 @@ namespace Ballit.Core.Data
         IQueryable<Post> GetPosts();
         IQueryable<Post> GetPostsForUser(long id);
         Post GetPost(long id);
+        Post Submit(Post p);
     }
 
     public class TestPostRepospository : IPostRepository
@@ -56,6 +57,11 @@ namespace Ballit.Core.Data
 
             //special logic if empty
             return GetPosts().Where(x => subsForUser.Contains(x.Sub));
+        }
+
+        public Post Submit(Post p)
+        {
+            return p;
         }
 
         private List<User> Users = new List<User>

@@ -1,0 +1,14 @@
+﻿@page
+@model SubmitModel
+
+<h3>Submit</h3>
+
+
+
+
+    <div asp-validation-summary="All"></div>
+    <form method="POST">
+        <div>Title: <input asp-for="Post.Title" /></div>
+        <div>Url: <input asp-for="Post.Url" /></div>
+        <input type="submit" />
+    </form>
