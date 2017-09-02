@@ -11,9 +11,10 @@ namespace Ballit.Data
     {
         private BallitContext Context { get; }
 
-        public DataAccess()
+        public DataAccess(BallitContext context)
         {
             //Context = new BallitContext();
+            Context = context;
         }
 
         public IQueryable<T> Query<T>()
