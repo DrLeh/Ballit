@@ -28,6 +28,7 @@ namespace Ballit.Core.Mappers
             //view.Score = model.PostScore();
             //view.Order = model.OrderScore();
             view.NumberOfComments = model.Comments?.Count() ?? 0;
+            view.Domain = model.Domain;
             return view;
         }
     }

@@ -20,5 +20,7 @@ namespace Ballit.Core.ViewModels
         public int Order { get; set; }
 
         public int NumberOfComments { get; set; }
+
+        public string Domain { get; set; }
     }
 }

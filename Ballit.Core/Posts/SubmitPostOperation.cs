@@ -17,12 +17,22 @@ namespace Ballit.Core.Posts
             Post = post;
         }
 
+        private string FixUrl(string url)
+        {
+            if(!url.StartsWith("http://") || !url.StartsWith("http://"))
+                return $"http://{url}";
+            return url;
+        }
+
         public void ValidateUrl()
         {
-            bool result = Uri.TryCreate(Post.Url, UriKind.Absolute, out Uri uriResult)
+            var url = Post.Url;
+            url = FixUrl(url);
+            bool result = Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
                 && uriResult.Scheme == Uri.UriSchemeHttp;
             Post.Url = uriResult.AbsolutePath;
             Post.Domain = uriResult.Host;
+            //if no go on http, try https
         }
 
         public void PopulateMetadata()
